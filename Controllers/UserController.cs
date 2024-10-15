@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -38,6 +39,7 @@ namespace AuthenticationService.Controllers
             };
         }
 
+        [Authorize(Roles = "Администратор")]
         [HttpGet]
         [Route("viewmodel")]
         public UserViewModel GetUserViewModel()
@@ -57,6 +59,7 @@ namespace AuthenticationService.Controllers
             return userViewModel;
         }
 
+        
         [HttpPost]
         [Route("authenticate")]
         public UserViewModel Authenticate(string login, string password)

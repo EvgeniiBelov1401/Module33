@@ -18,7 +18,12 @@ namespace AuthenticationService
                 LastName = "Иванов",
                 Email = "ivan@gmail.com",
                 Password = "11111122222qq",
-                Login = "ivanov"
+                Login = "ivanov",
+                Role=new Role()
+                {
+                    Id=1,
+                    Name="Пользователь"
+                }
             });
 
             _users.Add(new User()
@@ -28,7 +33,12 @@ namespace AuthenticationService
                 LastName = "Максимов",
                 Email = "maksim@gmail.com",
                 Password = "11",
-                Login = "maxim"
+                Login = "maxim",
+                Role = new Role()
+                {
+                    Id = 2,
+                    Name = "Администратор"
+                }
             });
 
             _users.Add(new User()
@@ -38,7 +48,12 @@ namespace AuthenticationService
                 LastName = "Антонов",
                 Email = "anton@gmail.com",
                 Password = "111zzxc1",
-                Login = "anton"
+                Login = "anton",
+                Role = new Role()
+                {
+                    Id = 1,
+                    Name = "Пользователь"
+                }
             });
         }
 
