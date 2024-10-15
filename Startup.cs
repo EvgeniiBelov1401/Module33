@@ -27,13 +27,14 @@ namespace AuthenticationService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ILogger, Logger>();
+            services.AddSingleton<IUserRepository, UserRepository>();
 
             var mapperConfig = new MapperConfiguration((v) =>
             {
                 v.AddProfile(new MappingProfile());
             });
 
-            IMapper mapper=mapperConfig.CreateMapper();
+            IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
             services.AddControllers();

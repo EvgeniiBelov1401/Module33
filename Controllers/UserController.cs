@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Authentication;
 
 namespace AuthenticationService.Controllers
 {
@@ -11,13 +12,16 @@ namespace AuthenticationService.Controllers
     {
         private IMapper _mapper;
         private ILogger _logger;
-        public UserController(ILogger logger, IMapper mapper)
+        private IUserRepository _userRepository;
+        public UserController(ILogger logger, IMapper mapper, IUserRepository userRepository)
         {
             _logger = logger;
             _mapper = mapper;
+            _userRepository = userRepository;
 
             logger.WriteEvent("Сообщение о событии в программе");
             logger.WriteError("Сообщение об ошибке в программе");
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -51,6 +55,30 @@ namespace AuthenticationService.Controllers
             var userViewModel = _mapper.Map<UserViewModel>(user);
 
             return userViewModel;
+        }
+
+        [HttpPost]
+        [Route("authenticate")]
+        public UserViewModel Authenticate(string login, string password)
+        {
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            {
+                throw new ArgumentNullException("Запрос не корректен");
+            }
+
+            User user = _userRepository.GetByLogin(login);
+
+            if (user is null)
+            {
+               throw new AuthenticationException("Пользователь на найден");
+            }
+
+            if (user.Password != password)
+            {
+                throw new AuthenticationException("Введенный пароль не корректен");
+            }
+
+            return _mapper.Map<UserViewModel>(user);
         }
     }
 }
