@@ -44,6 +44,7 @@ namespace AuthenticationService
             });
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -57,6 +58,7 @@ namespace AuthenticationService
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseLogMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
